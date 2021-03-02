@@ -1,19 +1,22 @@
-//ocultar secciones del DOM.
+import cipher from "./cipher.js";
 
-document.getElementById('teacherView').style.display = 'none';
+
+//ocultar secciones del DOM (Solo queda visible la vista inicial)
+
+document.getElementById('teacherView').style.display = 'none';  
 document.getElementById('studentView').style.display = 'none';
 document.getElementById('answer').style.display = 'none';
 
-
 //botones para acceder a las vistas.
-var buttonStudent= document.getElementById("student");
-var buttonTeacher= document.getElementById("teacher");
-var buttonBack= document.getElementById("back");
+
+var buttonStudent= document.getElementById("student");  
+var buttonTeacher= document.getElementById("teacher");  
+var buttonBack= document.getElementById("back");        
 
 
-buttonStudent.addEventListener("click",viewStudent);
-buttonTeacher.addEventListener("click",viewTeacher);
-buttonBack.addEventListener("click",viewPrincipal);
+buttonStudent.addEventListener("click",viewStudent);   //Botón para ingresar a la vista del estudiante
+buttonTeacher.addEventListener("click",viewTeacher);   // Botón para ingresar a la vista del profesor
+buttonBack.addEventListener("click",viewPrincipal);    // Bontón para regresar a la vista inicial
 
 //funciones para acceder a las vistas.
 function viewTeacher()
@@ -38,7 +41,7 @@ function viewPrincipal()
   document.getElementById('answer').style.display = 'none';
 }
 
-//función para crear quiz
+//función para imprimir el quiz creado por el profesor en la vista del estudiante
 
 
 var buttonQuiz= document.getElementById('send');
@@ -47,9 +50,9 @@ buttonQuiz.addEventListener("click",sendQuiz);
 
 function sendQuiz()
 {
-var quiz= document.getElementById('quizSend').value;
+var quiz= document.getElementById('quizSend').value;   
 localStorage.setItem('quizSend',quiz);
-window.location="index.html";
+window.location="index.html";                     
 
 }
 
@@ -57,27 +60,35 @@ var pasteQuiz= document.getElementById('question');
 pasteQuiz.innerHTML=localStorage.getItem("quizSend");
 
 
+// funcion codificar 
 
-//función para insertar respuestas y código del estudiantes
+var buttonCode=document.getElementById('code');
+    buttonCode.addEventListener('click',newCipher);
 
+ function newCipher(){
 
-var myAnswer = []; //Array con las respuestas de cada estudiante
-var myCode= []; //Array con el código de cada estudiante
-
-var theAnswer = document.getElementById ("answerOfStudet");   //cada respuesta insertada
-var theCode = document.getElementById ("codeOfStudent"); //cada código insertado
-
-var sendAnswer = document.getElementById ("code");
-sendAnswer.addEventListener('click', pasteAnswer);
-
- function pasteAnswer () {
-   let newAnswer = theAnswer.value;
-   myAnswer.push(newAnswer);
-   let newCode = theCode.value;
-   myCode.push (newCode);
-
-document.getElementById("viewCode").innerHTML =  myCode.join("<br>");
+   let codeStudent=document.getElementById('codeOfStudent').value;   //se toma el número que ingresa cada estudiante
+   let offSet = parseInt (codeStudent);                              
+   var newAnswer = document.getElementById('answerOfStudet').value;  // se accede a la respuesta de cada estudiante
+   let string = newAnswer.toUpperCase();                               //se pasan todos los caracteres a mayúsculas
  
-document.getElementById("viewAnswer").innerHTML =myAnswer.join ("<br>")
+  
+   document.getElementById("viewAnswer").innerHTML =   cipher.encode (string,offSet);  // valores para llamar la función 
+   document.getElementById("viewCode").innerHTML = codeStudent;
  
- }
+ } 
+ 
+
+// funcion para decodificar las respuestas de los estudiantes (solo tiene acceso el profesor)
+
+ var buttonDecode= document.getElementById("decode");          //Botón para decodificar las respuestas
+     buttonDecode.addEventListener ("click", cipherDecode);
+
+function cipherDecode(){
+  let codeStudentTwo= document.getElementById('codeTwo').value;
+  let offSet = parseInt (codeStudentTwo); 
+  let answerPaste =document.getElementById('answerTwoStudent').value; 
+  let string = answerPaste.toUpperCase(); 
+  
+   document.getElementById("viewAnswer").innerHTML =  cipher.decode (string,offSet);
+}
