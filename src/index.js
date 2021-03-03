@@ -73,7 +73,7 @@ var buttonCode=document.getElementById('code');
    let string = newAnswer.toUpperCase();                               //se pasan todos los caracteres a mayúsculas
  
   
-   document.getElementById("viewAnswer").innerHTML =   cipher.encode (string,offSet);  // valores para llamar la función 
+   document.getElementById("viewAnswer").innerHTML =   cipher.encode (offSet,string);  // valores para llamar la función 
    document.getElementById("viewCode").innerHTML = codeStudent;
  
  } 
@@ -90,5 +90,5 @@ function cipherDecode(){
   let answerPaste =document.getElementById('answerTwoStudent').value; 
   let string = answerPaste.toUpperCase(); 
   
-   document.getElementById("viewAnswer").innerHTML =  cipher.decode (string,offSet);
+   document.getElementById("viewAnswer").innerHTML =  cipher.decode (offSet,string);
 }

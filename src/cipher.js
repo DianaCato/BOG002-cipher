@@ -1,5 +1,5 @@
 const cipher = {
-  encode (string,offSet){
+  encode (offSet,string){
     let firstAnswer=[];                                          //array con las respuestas sin codificar
     let answerInCesar=[];   
 
@@ -19,7 +19,7 @@ const cipher = {
       return cipherFin;
     },
 
-  decode (string,offSet){
+  decode (offSet,string){
 
     let answerCipher=[];
     let answerDecode=[];  
