@@ -73,15 +73,22 @@ var buttonCode=document.getElementById('code');
    let string = newAnswer.toUpperCase();                               //se pasan todos los caracteres a mayúsculas
  
   
-   document.getElementById("viewAnswer").innerHTML =   cipher.encode (offSet,string);  // valores para llamar la función 
-   document.getElementById("viewCode").innerHTML = codeStudent;
+   var newTr = document.createElement("tr");                          // Crear nodo de tipo Element para insertar respuestas en la tabla
+   
+   var codeNew = document.createTextNode(codeStudent + " - ");              // Crear nodo de tipo Text con los valores para llamar la función
+   var answerNew = document.createTextNode(cipher.encode (offSet,string));
+
+   newTr.appendChild (codeNew);                                  // Añadir el nodo con las respuestas como hijo del nodo tipo Element
+   newTr.appendChild (answerNew);
+
+   document.getElementById ('allAnswer').appendChild(newTr);     //añadir el nodo Element como hijo a la tabla
  
  } 
  
 
 // funcion para decodificar las respuestas de los estudiantes (solo tiene acceso el profesor)
 
- var buttonDecode= document.getElementById("decode");          //Botón para decodificar las respuestas
+ var buttonDecode= document.getElementById("decodeButton");          //Botón para decodificar las respuestas
      buttonDecode.addEventListener ("click", cipherDecode);
 
 function cipherDecode(){
@@ -90,5 +97,6 @@ function cipherDecode(){
   let answerPaste =document.getElementById('answerTwoStudent').value; 
   let string = answerPaste.toUpperCase(); 
   
-   document.getElementById("viewAnswer").innerHTML =  cipher.decode (offSet,string);
+  confirm (cipher.decode (offSet,string));  
+   
 }
