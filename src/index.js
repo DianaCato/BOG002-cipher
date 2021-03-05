@@ -90,6 +90,8 @@ var buttonCode=document.getElementById('code');
 
  var buttonDecode= document.getElementById("decodeButton");          //Botón para decodificar las respuestas
      buttonDecode.addEventListener ("click", cipherDecode);
+  
+  var numberAnswer = 0;   
 
 function cipherDecode(){
   let codeStudentTwo= document.getElementById('codeTwo').value;
@@ -97,6 +99,17 @@ function cipherDecode(){
   let answerPaste =document.getElementById('answerTwoStudent').value; 
   let string = answerPaste.toUpperCase(); 
   
-  confirm (cipher.decode (offSet,string));  
-   
+  let reviewTeacher= confirm (cipher.decode (offSet,string));  
+
+  // función para revisar las respuestas (subrayado)  
+  
+  if (reviewTeacher == true){
+    document.getElementsByTagName ('tr')[numberAnswer].style.backgroundColor = 'green';
+    numberAnswer++;
+  } else {
+    document.getElementsByTagName ('tr')[numberAnswer].style.backgroundColor = 'red';
+    numberAnswer++;
+  }
+
 }
+
